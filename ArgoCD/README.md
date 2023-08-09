@@ -78,9 +78,13 @@ Developer --<Update the code and commit to git repo> Git repo <CI Pipeline> Dock
 
 # Working woth ArgoCD
 
-### Installing ArgoCD 
-#### Manual Installation:-
-##### GUI
+# Installing ArgoCD 
+
+```diff
+- Install Argo CD using manifest
+```
+
+
 
 * Check namespaces:- 
 
@@ -155,7 +159,49 @@ statefulset.apps/argocd-application-controller   1/1     2d22h
 root@0c737c8c793e:/# 
 ```
 
-**NOTE** In order to expose the service we modify ``service/argocd-server `` to NodePort. 
+
+
+```diff
+- Install Argo CD using HELM
+```
+
+```
+git clone https://github.com/argoproj/argo-helm.git
+```
+
+```
+cd argo-helm/charts/argo-cd/
+```
+
+```
+kubectl create ns myargo
+```
+
+```
+helm dependency up
+```
+
+```
+helm install myargo . -f values.yaml -n myargo
+```
+
+```
+kubectl get po -n myargo
+```
+
+```
+kubectl port-forward service/myargo-argocd-server 8090:80 -n myargo
+```
+
+```
+helm list  -n myargo
+```
+
+```
+helm uninstall myargo  -n myargo
+```
+
+
 
 
 ##### CLI
