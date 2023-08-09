@@ -107,6 +107,10 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.10/manifests/ha/install.yaml```
 ```
 
+```
+kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
+```
+
 * Check and Validate
 
 ```diff
