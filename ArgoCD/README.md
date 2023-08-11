@@ -1,5 +1,7 @@
 ### GitOps - ArgoCD
 
+![iameg](https://github.com/NileshChandekar/devops/blob/main/ArgoCD/images/np-pipeline.gif)
+
 * Single source of truth to deliver application and infrastructre. 
 * With use of source code repository we will have a full track of user as well what changes made in cluster. 
 * you will put a declarative manifest in gitrepo 
