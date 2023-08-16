@@ -215,10 +215,12 @@ root@jenkins1:~/slavejenkins# docker push nileshc85/jenkins-with-docker:20.04
     * Nodes and Clouds
       * Cloud ### On your left side cornet
 
-[!image](https://github.com/NileshChandekar/devops/blob/main/Jenkins/images/Screenshot%202023-08-16%20at%201.43.29%20PM.png)
-[!image]()
-[!image]()
-[!image]()
+![image](https://github.com/NileshChandekar/devops/blob/main/Jenkins/images/Screenshot%202023-08-16%20at%201.43.29%20PM.png)
+![image](https://github.com/NileshChandekar/devops/blob/main/Jenkins/images/Screenshot%202023-08-16%20at%201.44.26%20PM.png)
+![image](https://github.com/NileshChandekar/devops/blob/main/Jenkins/images/Screenshot%202023-08-16%20at%201.45.05%20PM.png)
+![image](https://github.com/NileshChandekar/devops/blob/main/Jenkins/images/Screenshot%202023-08-16%20at%201.45.17%20PM.png)
+
+
 
 
 ### Working Pipeline 
