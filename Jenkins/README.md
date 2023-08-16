@@ -217,6 +217,9 @@ pipeline {
 }
 ```
 
+* Pipeline Result:
+
+![image](https://github.com/NileshChandekar/devops/blob/main/Jenkins/images/Screenshot%202023-08-16%20at%201.57.42%20PM.png)
 
 ### Installation of Jenkins Slave:- 
 
@@ -318,7 +321,9 @@ pipeline {
 }
 ```
 
+* Pipeline Result
 
+![image](https://github.com/NileshChandekar/devops/blob/main/Jenkins/images/Screenshot%202023-08-16%20at%201.58.01%20PM.png)
 
 
 ### Working Pipeline 
