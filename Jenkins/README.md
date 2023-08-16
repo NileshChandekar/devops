@@ -142,6 +142,81 @@ root@jenkins1:~# cat /var/lib/jenkins/secrets/initialAdminPassword
 
 * Complete the basic configuration which is required.
 
+* Testing Master Config:-
+
+```diff
+pipeline {
+  environment {
+    registry = "nileshc85/cicd-test-1"
+    registryCredential = 'jenkins-auth-docker1'
+    dockerImage = ''
+  }
+  
++  agent any
+
+    
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+
+
+        stage("Clone Git Repository") {
+            steps {
+                git(
+                    url: "http://gitlab.example.com/root/np-1.git",
+                    branch: "main",
+                    changelog: true,
+                    poll: true
+                )
+            }
+        }
+        
+            stage('Building image') {
+              steps{
+                script {
+                  dockerImage = docker.build registry + ":$BUILD_NUMBER"
+                }
+              }
+            }
+        
+        stage('Deploy Image') {
+          steps{
+             script {
+                docker.withRegistry( '', registryCredential ) {
+                dockerImage.push()
+              }
+            }
+          }
+        }
+        
+        stage('Remove Unused docker image') {
+          steps{
+            sh "docker rmi $registry:$BUILD_NUMBER"
+          }
+        }
+        
+        stage('Run Script') {
+            steps {
+                sh 'chmod +x updatemanifest.sh && ./updatemanifest.sh'
+            }
+        }
+
+        stage('Git Push') {
+            steps {
+                sh 'git add .'
+                sh 'git commit -m "push to git $BUILD_NUMBER"'
+                sh 'git push http://root:haIvVP+K7nXhr0+I8gK6VxYtWFtaWkM7kOkenHhrsGs=@gitlab.example.com/root/np-1.git main'
+            }
+        }
+        
+        
+    }
+}
+```
+
 
 ### Installation of Jenkins Slave:- 
 
@@ -220,6 +295,29 @@ root@jenkins1:~/slavejenkins# docker push nileshc85/jenkins-with-docker:20.04
 ![image](https://github.com/NileshChandekar/devops/blob/main/Jenkins/images/Screenshot%202023-08-16%20at%201.45.05%20PM.png)
 ![image](https://github.com/NileshChandekar/devops/blob/main/Jenkins/images/Screenshot%202023-08-16%20at%201.45.17%20PM.png)
 
+* Testing Slave Config
+  
+```diff
+pipeline {
+
+  environment {
+    registry = "nileshc85/jenkins-with-docker:20.04"
+    registryCredential = 'jenkins-auth-docker1'
+  }
+  
++  agent {
++      label 'docker-slave-jenkins'    
+  }
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+     }
+}
+```
+
 
 
 
@@ -230,75 +328,3 @@ root@jenkins1:~/slavejenkins# docker push nileshc85/jenkins-with-docker:20.04
 * Credentials, for DockerHub
 * Credentials for Git
 
-```
-pipeline {
-  environment {
-    registry = "nileshc85/cicd-test-1"
-    registryCredential = 'jenkins-auth-docker1'
-    dockerImage = ''
-  }
-  
-  agent any
-
-    
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-            }
-        }
-
-
-        stage("Clone Git Repository") {
-            steps {
-                git(
-                    url: "http://gitlab.example.com/root/np-1.git",
-                    branch: "main",
-                    changelog: true,
-                    poll: true
-                )
-            }
-        }
-        
-            stage('Building image') {
-              steps{
-                script {
-                  dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
-              }
-            }
-        
-        stage('Deploy Image') {
-          steps{
-             script {
-                docker.withRegistry( '', registryCredential ) {
-                dockerImage.push()
-              }
-            }
-          }
-        }
-        
-        stage('Remove Unused docker image') {
-          steps{
-            sh "docker rmi $registry:$BUILD_NUMBER"
-          }
-        }
-        
-        stage('Run Script') {
-            steps {
-                sh 'chmod +x updatemanifest.sh && ./updatemanifest.sh'
-            }
-        }
-
-        stage('Git Push') {
-            steps {
-                sh 'git add .'
-                sh 'git commit -m "push to git $BUILD_NUMBER"'
-                sh 'git push http://root:haIvVP+K7nXhr0+I8gK6VxYtWFtaWkM7kOkenHhrsGs=@gitlab.example.com/root/np-1.git main'
-            }
-        }
-        
-        
-    }
-}
-```
