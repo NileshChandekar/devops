@@ -102,6 +102,7 @@ root@jenkins1:~# wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.ke
 root@jenkins1:~# sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
 root@jenkins1:~# apt update -y
 root@jenkins1:~# apt install jenkins docker.io -y
+```
 
 ```
 root@jenkins1:~# systemctl status jenkins.service
@@ -153,6 +154,7 @@ root@jenkins1:~# mkdir slavejenkins
 root@jenkins1:~# cd slavejenkins
 root@jenkins1:~/slavejenkins#
 ```
+
 ```
 root@jenkins1:~/slavejenkins# cat Dockerfile 
 # Use the official Ubuntu base image
